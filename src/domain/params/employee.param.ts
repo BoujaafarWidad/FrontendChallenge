@@ -10,3 +10,8 @@ export const UpdateEmployeeSchema = z.object({
   name: z.string().min(1),
 });
 export type UpdateEmployeeParams = z.infer<typeof UpdateEmployeeSchema>;
+
+export const DeleteEmployeeByIdSchema = z.object({
+  id: EmployeeIdSchema,
+});
+export type DeleteEmployeeByIdParams = z.infer<typeof DeleteEmployeeByIdSchema>;

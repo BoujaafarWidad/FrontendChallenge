@@ -3,8 +3,9 @@ import {
   EmployeeListModel,
   EmployeeListSchema,
   EmployeeModel,
+  EmployeeSchema
 } from "@/domain/models/employee.model";
-import { GetEmployeeByIdParams } from "@/domain/params/employee.param";
+import { DeleteEmployeeByIdParams, GetEmployeeByIdParams } from "@/domain/params/employee.param";
 
 export default class EmployeeDatasource extends EmployeeDatasourceContract {
   public async getEmployeeList(): Promise<EmployeeListModel | undefined> {
@@ -38,7 +39,25 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
   public async getEmployeeById(
     params: GetEmployeeByIdParams,
   ): Promise<EmployeeModel | undefined> {
-    throw new Error("Method not implemented.");
+    try {
+      const response = await fetch(
+        `https://dummy.restapiexample.com/api/v1/employee/${params.id}`,
+      );
+
+      // Validate response
+      if (response.status !== 200) {
+        return undefined;
+      }
+
+      // Obtain json from response
+      const json = await response.json();
+      // Extract data
+      const data = json["data"];
+
+      return EmployeeSchema.parse(data);
+    } catch (exception) {
+      return undefined;
+    }
   }
 
   public async updateEmployeeById(
@@ -47,9 +66,27 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
     throw new Error("Method not implemented.");
   }
 
-  public deleteEmployeeById(
-    params: unknown,
+  public async deleteEmployeeById(
+    params: DeleteEmployeeByIdParams,
   ): Promise<EmployeeModel | undefined> {
-    throw new Error("Method not implemented.");
+    try {
+      const response = await fetch(
+        `https://dummy.restapiexample.com/api/v1/delete/${params.id}`,
+      );
+
+      // Validate response
+      if (response.status !== 200) {
+        return undefined;
+      }
+
+      // Obtain json from response
+      const json = await response.json();
+      // Extract message
+      const message = json["message"];
+
+      return message;
+    } catch (exception) {
+      return undefined;
+    }
   }
 }
