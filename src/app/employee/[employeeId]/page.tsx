@@ -18,7 +18,7 @@ export default function EditEmployeePage() {
   //   employee_salary: 10_000_000,
   // };
 
-  console.log(deleteMessage, "deleeted")
+ // console.log(deleteMessage, "deleeted")
 
   return (
     <main className="flex h-screen flex-col items-start justify-start p-4 gap-4">

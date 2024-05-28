@@ -15,3 +15,11 @@ export const DeleteEmployeeByIdSchema = z.object({
   id: EmployeeIdSchema,
 });
 export type DeleteEmployeeByIdParams = z.infer<typeof DeleteEmployeeByIdSchema>;
+
+export const CreateEmployeeSchema = z.object({
+  name: z.string().min(1),
+  salary: z.number().positive().optional(),
+  age: z.number().positive().optional()
+});
+
+export type CreateEmployeeParams = z.infer<typeof CreateEmployeeSchema>;

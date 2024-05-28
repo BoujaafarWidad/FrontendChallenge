@@ -2,10 +2,9 @@ import EmployeeDatasourceContract from "@/domain/contracts/employeeDatasource.co
 import {
   EmployeeListModel,
   EmployeeListSchema,
-  EmployeeModel,
-  EmployeeSchema
+  EmployeeModel
 } from "@/domain/models/employee.model";
-import { DeleteEmployeeByIdParams, GetEmployeeByIdParams } from "@/domain/params/employee.param";
+import { CreateEmployeeParams, DeleteEmployeeByIdParams, GetEmployeeByIdParams } from "@/domain/params/employee.param";
 
 export default class EmployeeDatasource extends EmployeeDatasourceContract {
   public async getEmployeeList(): Promise<EmployeeListModel | undefined> {
@@ -31,9 +30,33 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
   }
 
   public async createEmployee(
-    params: unknown,
+    params: CreateEmployeeParams,
   ): Promise<EmployeeModel | undefined> {
-    throw new Error("Method not implemented.");
+    try {
+      const response = await fetch(
+        "https://dummy.restapiexample.com/api/v1/create",
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(params),
+          cache: "no-cache"
+        }
+      );
+
+      // Validate response
+      if (response.status !== 200) {
+        return undefined;
+      }
+      // Obtain json from response
+      const json = await response.json();
+      // Extract data
+      const data = json["data"];
+      return { id: data.id, employee_name: data.name, employee_salary: data.salary, employee_age: data.age };
+    } catch (exception) {
+      return undefined;
+    }
   }
 
   public async getEmployeeById(
@@ -54,7 +77,12 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
       // Extract data
       const data = json["data"];
 
-      return EmployeeSchema.parse(data);
+      return { id: 1, employee_name: "widad", employee_salary: 20000, employee_age: 27 };
+      // setTimeout(() => {
+
+      // }, 3000);
+      // return { id: 1, employee_name: "widad", employee_salary: 20000, employee_age: 27 }
+
     } catch (exception) {
       return undefined;
     }
