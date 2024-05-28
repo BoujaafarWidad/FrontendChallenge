@@ -28,12 +28,12 @@ export default class EmployeeService {
     return this.datasource.getEmployeeById(params);
   }
   public updateEmployeeById(
-    params: unknown,
+    params: GetEmployeeByIdParams, data: CreateEmployeeParams
   ): Promise<EmployeeModel | undefined> {
-    return this.datasource.updateEmployeeById(params);
+    return this.datasource.updateEmployeeById(params, data);
   }
   public deleteEmployeeById(
-    params: unknown,
+    params: GetEmployeeByIdParams,
   ): Promise<EmployeeModel | undefined> {
     return this.datasource.deleteEmployeeById(params);
   }

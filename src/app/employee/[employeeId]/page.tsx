@@ -18,7 +18,7 @@ export default function EditEmployeePage() {
   //   employee_salary: 10_000_000,
   // };
 
- // console.log(deleteMessage, "deleeted")
+  // console.log(deleteMessage, "deleeted")
 
   return (
     <main className="flex h-screen flex-col items-start justify-start p-4 gap-4">
@@ -40,12 +40,12 @@ export default function EditEmployeePage() {
         </button>
       </div>
 
-      {isLoading && isLoadingDelete && (
+      {(isLoading || isLoadingDelete) && (
         <div className="flex-1 w-full items-center justify-center">
           <span>loading</span>
         </div>
       )}
-      {!data && !isLoading && isError && isErrorDelete && (
+      {((!data && !isLoading) || isError || isErrorDelete) && (
         <div className="flex-1 w-full items-center justify-center">
           <span>error</span>
         </div>

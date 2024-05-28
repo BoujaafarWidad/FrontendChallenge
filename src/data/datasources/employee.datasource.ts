@@ -4,7 +4,7 @@ import {
   EmployeeListSchema,
   EmployeeModel
 } from "@/domain/models/employee.model";
-import { CreateEmployeeParams, DeleteEmployeeByIdParams, GetEmployeeByIdParams } from "@/domain/params/employee.param";
+import { CreateEmployeeParams, DeleteEmployeeByIdParams, GetEmployeeByIdParams, UpdateEmployeeParams } from "@/domain/params/employee.param";
 
 export default class EmployeeDatasource extends EmployeeDatasourceContract {
   public async getEmployeeList(): Promise<EmployeeListModel | undefined> {
@@ -77,7 +77,7 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
       // Extract data
       const data = json["data"];
 
-      return { id: 1, employee_name: "widad", employee_salary: 20000, employee_age: 27 };
+      return data;
       // setTimeout(() => {
 
       // }, 3000);
@@ -89,9 +89,33 @@ export default class EmployeeDatasource extends EmployeeDatasourceContract {
   }
 
   public async updateEmployeeById(
-    params: unknown,
+    params: GetEmployeeByIdParams, data: UpdateEmployeeParams
   ): Promise<EmployeeModel | undefined> {
-    throw new Error("Method not implemented.");
+    try {
+      const response = await fetch(
+        `https://dummy.restapiexample.com/api/v1/update/${params.id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data),
+          cache: "no-cache"
+        }
+      );
+
+      // Validate response
+      if (response.status !== 200) {
+        return undefined;
+      }
+      // Obtain json from response
+      const json = await response.json();
+      // Extract data
+      const returnedData = json["data"];
+      return { id: data.id, employee_name: data.name, employee_salary: data.salary, employee_age: data.age };
+    } catch (exception) {
+      return undefined;
+    }
   }
 
   public async deleteEmployeeById(
