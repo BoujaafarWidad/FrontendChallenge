@@ -8,7 +8,7 @@ export interface EmployeeCardProps {
 
 const EmployeeCard = ({ employee }: EmployeeCardProps): ReactNode => {
   return (
-    <div className="w-full shadow bg-slate-500 p-4 flex gap-2">
+    <div className="w-full shadow bg-[#FEAE6F] p-4 flex gap-2 min-w-80 rounded-md font-sans">
       <span>{employee.id}</span>
       <span>{employee.employee_name}</span>
       <span>{EmployeeFormatter.formatSalary(employee.employee_salary)}</span>

@@ -2,6 +2,7 @@
 import { useGetEmployeeById } from "@/domain/hooks/useGetEmployeeById.hook";
 import { useUpdateEmployee } from "@/domain/hooks/useUpdateEmployee.hook";
 import { CreateEmployeeParams } from "@/domain/params/employee.param";
+import Loading from "@/ui/components/Loading";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -51,7 +52,7 @@ export default function EditEmployeePage() {
 
   return (
     <main className="flex h-screen flex-col justify-items-center p-4">
-      Edit Employee
+      <h1 className="font-sans text-lg font-medium">Edit Employee</h1>
       {data &&
         <div className="flex justify-center mt-10">
           <div className="w-full max-w-xs">
@@ -87,7 +88,7 @@ export default function EditEmployeePage() {
               </div>
               <div className="flex items-center justify-center mt-7">
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="border px-4 py-1.5 rounded-md bg-[#01204E] text-white font-sans"
                   type="button"
                   onClick={OnSubmitClick}
                 >
@@ -100,7 +101,7 @@ export default function EditEmployeePage() {
       }
       {isLoading && mutation.isPending && (
         <div className="flex-1 w-full items-center justify-center">
-          <span>loading</span>
+          <Loading />
         </div>
       )}
       {isError && !isLoading && (

@@ -1,6 +1,7 @@
 "use client";
 import { useCreateEmployee } from "@/domain/hooks/useCreateEmployee.hook";
 import { CreateEmployeeParams } from "@/domain/params/employee.param";
+import Loading from "@/ui/components/Loading";
 import { useState } from "react";
 
 export default function EditEmployeePage() {
@@ -87,7 +88,7 @@ export default function EditEmployeePage() {
       </div>
       {mutation.isPending && (
         <div className="flex-1 w-full items-center justify-center">
-          <span>loading</span>
+          <Loading />
         </div>
       )}
       {!mutation.isPending && mutation.isError && (
